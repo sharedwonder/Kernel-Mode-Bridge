@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{89D359EB-535D-4D19-A6C6-2845A2FCD22E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80ACFBE1-3489-4BC4-95C0-1DF3FADD320F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel Mode Bridge", "src\Kernel Mode Bridge\Kernel Mode Bridge.vcxproj", "{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel Mode Entry", "src\Kernel Mode Entry\Kernel Mode Entry.vcxproj", "{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kernel Mode Loader", "src\Kernel Mode Loader\Kernel Mode Loader.vcxproj", "{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Debug|x64.ActiveCfg = Debug|x64
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Debug|x64.Build.0 = Debug|x64
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Debug|x64.Deploy.0 = Debug|x64
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Debug|x86.ActiveCfg = Debug|Win32
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Debug|x86.Build.0 = Debug|Win32
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Debug|x86.Deploy.0 = Debug|Win32
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Release|x64.ActiveCfg = Release|x64
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Release|x64.Build.0 = Release|x64
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Release|x64.Deploy.0 = Release|x64
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Release|x86.ActiveCfg = Release|Win32
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Release|x86.Build.0 = Release|Win32
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD}.Release|x86.Deploy.0 = Release|Win32
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Debug|x64.ActiveCfg = Debug|x64
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Debug|x64.Build.0 = Debug|x64
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Debug|x86.ActiveCfg = Debug|Win32
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Debug|x86.Build.0 = Debug|Win32
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Release|x64.ActiveCfg = Release|x64
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Release|x64.Build.0 = Release|x64
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Release|x86.ActiveCfg = Release|Win32
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770}.Release|x86.Build.0 = Release|Win32
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Debug|x64.ActiveCfg = Debug|x64
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Debug|x64.Build.0 = Debug|x64
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Debug|x64.Deploy.0 = Debug|x64
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Debug|x86.ActiveCfg = Debug|Win32
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Debug|x86.Build.0 = Debug|Win32
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Debug|x86.Deploy.0 = Debug|Win32
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Release|x64.ActiveCfg = Release|x64
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Release|x64.Build.0 = Release|x64
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Release|x64.Deploy.0 = Release|x64
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Release|x86.ActiveCfg = Release|Win32
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Release|x86.Build.0 = Release|Win32
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435}.Release|x86.Deploy.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{80ACFBE1-3489-4BC4-95C0-1DF3FADD320F} = {89D359EB-535D-4D19-A6C6-2845A2FCD22E}
+		{78F3FA41-9949-40B9-B3A7-8415DD5DA8CD} = {80ACFBE1-3489-4BC4-95C0-1DF3FADD320F}
+		{57B2E513-A759-4E07-8DB6-F7CF6AFFE770} = {80ACFBE1-3489-4BC4-95C0-1DF3FADD320F}
+		{BCB1D10A-3DB0-4A6B-A064-0F4E9519C435} = {80ACFBE1-3489-4BC4-95C0-1DF3FADD320F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8B88452-65E8-482A-A362-7FB8D327469A}
+	EndGlobalSection
+EndGlobal

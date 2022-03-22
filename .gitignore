@@ -1,0 +1,19 @@
+# -*- Git Ignore File -*-
+
+# Ignore *.user files.
+*.user
+
+# Ignore build folder.
+build/
+
+# Ignore libraries.
+lib/
+
+# Ignore release folder.
+release/
+
+# Ignore Visual Studio cache folder.
+.vs/
+
+# Ignore Visual Studio Code folder.
+.vscode/

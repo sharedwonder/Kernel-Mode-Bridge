@@ -15,6 +15,15 @@ typedef struct _UNICODE_STRING {
 #endif // MIDL_PASS
 } UNICODE_STRING, *PUNICODE_STRING;
 
+typedef struct _IO_STATUS_BLOCK {
+    union {
+        NTSTATUS Status;
+        PVOID Pointer;
+    };
+
+    ULONG_PTR Information;
+} IO_STATUS_BLOCK, *PIO_STATUS_BLOCK;
+
 typedef struct _OBJECT_ATTRIBUTES {
     ULONG Length;
     HANDLE RootDirectory;

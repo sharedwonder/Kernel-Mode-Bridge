@@ -5,10 +5,9 @@
 #include "kmentry.h"
 
 HANDLE KME_Device;
-static BOOL SeDebugPrivilegeFlag;
 
 static BOOL EnableDebugPrivilege() {
-    BOOL isSuccess;
+    BOOL isSuccess = TRUE;
     HANDLE token;
 
     if (isSuccess = OpenProcessToken(GetCurrentProcess(), TOKEN_ALL_ACCESS, &token)) {
@@ -36,37 +35,10 @@ static BOOL EnableDebugPrivilege() {
                 privileges.PrivilegeCount = 1;
                 privileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
                 isSuccess = AdjustTokenPrivileges(token, FALSE, &privileges, sizeof(privileges), NULL, NULL);
-                SeDebugPrivilegeFlag = TRUE;
-            } else {
-                SeDebugPrivilegeFlag = FALSE;
             }
         }
 
         CloseHandle(token);
-    }
-
-    return isSuccess;
-}
-
-static BOOL RestoreDebugPrivilege() {
-    BOOL isSuccess;
-    HANDLE token;
-
-    if (SeDebugPrivilegeFlag) {
-
-        if (isSuccess = OpenProcessToken(GetCurrentProcess(), TOKEN_ALL_ACCESS, &token)) {
-            TOKEN_PRIVILEGES privileges;
-
-            if (isSuccess = LookupPrivilegeValue(NULL, TEXT("SeDebugPrivilege"), &(privileges.Privileges[0].Luid))) {
-                privileges.PrivilegeCount = 1;
-                privileges.Privileges[0].Attributes = SE_PRIVILEGE_REMOVED;
-                isSuccess = AdjustTokenPrivileges(token, FALSE, &privileges, 0, NULL, 0);
-            }
-
-            CloseHandle(token);
-        }
-    } else {
-        isSuccess = TRUE;
     }
 
     return isSuccess;
@@ -97,10 +69,7 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID reserved) {
         if (KME_Device != NULL) {
             CloseHandle(KME_Device);
         }
-
-        if (!RestoreDebugPrivilege()) {
-            return FALSE;
-        }
+        KME_Device = NULL;
     }
         break;
 

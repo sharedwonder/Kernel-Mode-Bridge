@@ -2,9 +2,7 @@
 // This software is licensed under MIT License.
 
 #include <windows.h>
-#include <detours.h>
-#include <stdbool.h>
 
-void KernelModeAttach();
+BOOL KernelModeAttach();
 
 void KernelModeDetach();

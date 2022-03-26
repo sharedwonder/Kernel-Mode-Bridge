@@ -23,9 +23,8 @@ NTSTATUS KME_DispatchCreate(_In_ PDEVICE_OBJECT driver, _In_ PIRP irp) {
         &(securityContext->AccessState->SubjectSecurityContext), irp->RequestorMode)) {
         status = STATUS_PRIVILEGE_NOT_HELD;
         KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL,
-                   "[KernelModeEntry: KME_DispatchCreate] The client have no required privileges (SE_DEBUG_PRIVILEGE).\n"));
-        KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL,
-                   "[KernelModeEntry: KME_DispatchCreate] The client unable connect.\n"));
+                   "[KernelModeEntry: KME_DispatchCreate] The connection is rejected:"
+                   "the client have no required privileges (SE_DEBUG_PRIVILEGE).\n"));
         goto End;
     }
 
@@ -45,12 +44,12 @@ NTSTATUS KME_DispatchClose(_In_ PDEVICE_OBJECT driver, _In_ PIRP irp) {
 
     NTSTATUS status = STATUS_SUCCESS;
 
+    KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_INFO_LEVEL,
+               "[KernelModeEntry: KME_DispatchClose] The client is successfully disconnected.\n"));
+
     irp->IoStatus.Status = status;
     irp->IoStatus.Information = 0;
     IoCompleteRequest(irp, IO_NO_INCREMENT);
-
-    KdPrintEx((DPFLTR_IHVDRIVER_ID, DPFLTR_INFO_LEVEL,
-               "[KernelModeEntry: KME_DispatchClose] The client is successfully disconnected.\n"));
 
     return status;
 }
@@ -69,10 +68,10 @@ NTSTATUS KME_DispatchDeviceControl(_In_ PDEVICE_OBJECT driver, _In_ PIRP irp) {
         goto End;
     }
 
-#define CTRL_CASE(Name, Function) \
-    case Name: \
+#define CTRL_CASE(name, function) \
+    case (name): \
     { \
-        ARGS_ ## Name *input = (ARGS_ ## Name *) originalInput; \
+        PARAM_ ## name *input = (PARAM_ ## name *) originalInput; \
         if (inputLength > 0 && input == NULL) { \
             status = STATUS_INVALID_PARAMETER; \
             goto End; \
@@ -81,16 +80,22 @@ NTSTATUS KME_DispatchDeviceControl(_In_ PDEVICE_OBJECT driver, _In_ PIRP irp) {
             status = STATUS_INFO_LENGTH_MISMATCH; \
             goto End; \
         } \
-        status = Function; \
+        status = (function); \
     } \
         break
 
     switch (controlCode) {
-        CTRL_CASE(NT_OPEN_PROCESS, ZwOpenProcess(input->processHandle, input->desiredAccess, input->objectAttributes, input->clientId));
+        CTRL_CASE(NT_CREATE_FILE, ZwCreateFile(input->FileHandle, input->DesiredAccess, input->ObjectAttributes,
+                                               input->IoStatusBlock, input->AllocationSize, input->FileAttributes,
+                                               input->ShareAccess, input->CreateDisposition, input->CreateOptions,
+                                               input->EaBuffer, input->EaLength));
+        CTRL_CASE(NT_OPEN_PROCESS, ZwOpenProcess(input->ProcessHandle, input->DesiredAccess, input->ObjectAttributes, input->ClientId));
+        CTRL_CASE(NT_OPEN_PROCESS_TOKEN,
+                  NtOpenProcessToken(input->ProcessHandle, input->DesiredAccess, input->TokenHandle));
         CTRL_CASE(NT_OPEN_PROCESS_TOKEN_EX,
-                  ZwOpenProcessTokenEx(input->processHandle, input->desiredAccess, input->handleAttributes, input->tokenHandle));
-        CTRL_CASE(NT_TERMINATE_PROCESS, ZwTerminateProcess(input->processHandle, input->exitStatus));
-        CTRL_CASE(NT_CLOSE, ZwClose(input->handle));
+                  ZwOpenProcessTokenEx(input->ProcessHandle, input->DesiredAccess, input->HandleAttributes, input->TokenHandle));
+        CTRL_CASE(NT_TERMINATE_PROCESS, ZwTerminateProcess(input->ProcessHandle, input->ExitStatus));
+        CTRL_CASE(NT_CLOSE, ZwClose(input->Handle));
 
     default: // Invalid control code.
         status = STATUS_INVALID_DEVICE_REQUEST;

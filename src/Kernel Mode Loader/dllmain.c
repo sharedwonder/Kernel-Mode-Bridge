@@ -6,12 +6,10 @@
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID reserved) {
     switch (reason) {
     case DLL_PROCESS_ATTACH:
-        KernelModeAttach();
-        break;
+        return KernelModeAttach();
 
     case DLL_PROCESS_DETACH:
         KernelModeDetach();
-        break;
 
     default:
         break;

@@ -11,7 +11,7 @@ EXTERN_C HANDLE KME_Device;
     DeviceIoControl(KME_Device, controlCode, &input, sizeof(input), NULL, 0, (LPDWORD) (statusRef), NULL)
 
 #define INLINE_CALL_KERNEL_API(name, setupInput) \
-    ARGS_ ## name input; \
+    PARAM_ ## name input; \
     setupInput \
     NTSTATUS status;\
     KME_DEVICE_CONTROL((name), input, &status); \

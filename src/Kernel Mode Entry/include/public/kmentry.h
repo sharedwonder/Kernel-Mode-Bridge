@@ -39,38 +39,62 @@
 #define KME_CONTROL_CODE(x) CTL_CODE(FILE_DEVICE_UNKNOWN, 0x800 + x, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 typedef enum {
+    FC_NT_CREATE_FILE,
     FC_NT_OPEN_PROCESS,
+    FC_NT_OPEN_PROCESS_TOKEN,
     FC_NT_OPEN_PROCESS_TOKEN_EX,
     FC_NT_TERMINATE_PROCESS,
     FC_NT_CLOSE,
 } KME_FUNCTION_CODE;
 
 typedef enum {
+    NT_CREATE_FILE = KME_CONTROL_CODE(FC_NT_CREATE_FILE),
     NT_OPEN_PROCESS = KME_CONTROL_CODE(FC_NT_OPEN_PROCESS),
+    NT_OPEN_PROCESS_TOKEN = KME_CONTROL_CODE(FC_NT_OPEN_PROCESS_TOKEN),
     NT_OPEN_PROCESS_TOKEN_EX = KME_CONTROL_CODE(FC_NT_OPEN_PROCESS_TOKEN_EX),
     NT_TERMINATE_PROCESS = KME_CONTROL_CODE(FC_NT_TERMINATE_PROCESS),
     NT_CLOSE = KME_CONTROL_CODE(FC_NT_CLOSE)
 } KME_CONTROL_CODE;
 
 typedef struct {
-    _Out_ PHANDLE processHandle;
-    _In_ ACCESS_MASK desiredAccess;
-    _In_ POBJECT_ATTRIBUTES objectAttributes;
-    _In_opt_ PCLIENT_ID clientId;
-} ARGS_NT_OPEN_PROCESS;
+    PHANDLE FileHandle;
+    ACCESS_MASK DesiredAccess;
+    POBJECT_ATTRIBUTES ObjectAttributes;
+    PIO_STATUS_BLOCK IoStatusBlock;
+    PLARGE_INTEGER AllocationSize;
+    ULONG FileAttributes;
+    ULONG ShareAccess;
+    ULONG CreateDisposition;
+    ULONG CreateOptions;
+    PVOID EaBuffer;
+    ULONG EaLength;
+} PARAM_NT_CREATE_FILE;
 
 typedef struct {
-    _In_ HANDLE processHandle;
-    _In_ ACCESS_MASK desiredAccess;
-    _In_ ULONG handleAttributes;
-    _Out_ PHANDLE tokenHandle;
-} ARGS_NT_OPEN_PROCESS_TOKEN_EX;
+    PHANDLE ProcessHandle;
+    ACCESS_MASK DesiredAccess;
+    POBJECT_ATTRIBUTES ObjectAttributes;
+    PCLIENT_ID ClientId;
+} PARAM_NT_OPEN_PROCESS;
 
 typedef struct {
-    _In_opt_ HANDLE processHandle;
-    _In_ NTSTATUS exitStatus;
-} ARGS_NT_TERMINATE_PROCESS;
+    HANDLE ProcessHandle;
+    ACCESS_MASK DesiredAccess;
+    PHANDLE TokenHandle;
+} PARAM_NT_OPEN_PROCESS_TOKEN;
 
 typedef struct {
-    _In_ HANDLE handle;
-} ARGS_NT_CLOSE;
+    HANDLE ProcessHandle;
+    ACCESS_MASK DesiredAccess;
+    ULONG HandleAttributes;
+    PHANDLE TokenHandle;
+} PARAM_NT_OPEN_PROCESS_TOKEN_EX;
+
+typedef struct {
+    HANDLE ProcessHandle;
+    NTSTATUS ExitStatus;
+} PARAM_NT_TERMINATE_PROCESS;
+
+typedef struct {
+    HANDLE Handle;
+} PARAM_NT_CLOSE;

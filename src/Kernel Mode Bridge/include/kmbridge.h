@@ -37,27 +37,47 @@ typedef HMODULE KernelModeHostLibrary;
 
 // Native NT kernel functions.
 
+KERNEL_API NTSTATUS NTAPI NtCreateFile(
+    _Out_ PHANDLE FileHandle,
+    _In_ ACCESS_MASK DesiredAccess,
+    _In_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _Out_ PIO_STATUS_BLOCK IoStatusBlock,
+    _In_opt_ PLARGE_INTEGER AllocationSize,
+    _In_ ULONG FileAttributes,
+    _In_ ULONG ShareAccess,
+    _In_ ULONG CreateDisposition,
+    _In_ ULONG CreateOptions,
+    _In_reads_bytes_opt_(EaLength) PVOID EaBuffer,
+    _In_ ULONG EaLength
+);
+
 KERNEL_API NTSTATUS NTAPI NtOpenProcess(
-    _Out_ PHANDLE processHandle,
-    _In_ ACCESS_MASK desiredAccess,
-    _In_ POBJECT_ATTRIBUTES objectAttributes,
-    _In_opt_ PCLIENT_ID clientId
+    _Out_ PHANDLE ProcessHandle,
+    _In_ ACCESS_MASK DesiredAccess,
+    _In_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_opt_ PCLIENT_ID ClientId
+);
+
+KERNEL_API NTSTATUS NTAPI NtOpenProcessToken(
+    _In_ HANDLE ProcessHandle,
+    _In_ ACCESS_MASK DesiredAccess,
+    _Out_ PHANDLE TokenHandle
 );
 
 KERNEL_API NTSTATUS NTAPI NtOpenProcessTokenEx(
-    _In_ HANDLE processHandle,
-    _In_ ACCESS_MASK desiredAccess,
-    _In_ ULONG handleAttributes,
-    _Out_ PHANDLE tokenHandle
+    _In_ HANDLE ProcessHandle,
+    _In_ ACCESS_MASK DesiredAccess,
+    _In_ ULONG HandleAttributes,
+    _Out_ PHANDLE TokenHandle
 );
 
 KERNEL_API NTSTATUS NTAPI NtTerminateProcess(
-    _In_opt_ HANDLE processHandle,
-    _In_ UINT exitStatus
+    _In_opt_ HANDLE ProcessHandle,
+    _In_ UINT ExitStatus
 );
 
 KERNEL_API NTSTATUS NTAPI NtClose(
-    _In_ HANDLE handle
+    _In_ HANDLE Handle
 );
 
 EXTERN_C_END

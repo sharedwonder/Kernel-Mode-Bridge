@@ -10,12 +10,12 @@
 static HMODULE NtDll;
 static HMODULE KernelModeBridgeDll;
 static LPSTR Name[] = {
-    // "NtCreateFile",
+    "NtCreateFile",
     "NtOpenProcess",
-    // "NtOpenProcessToken",
-    // "NtOpenProcessTokenEx",
+    "NtOpenProcessToken",
+    "NtOpenProcessTokenEx",
     "NtTerminateProcess"
-    // "NtClose"
+    "NtClose"
 };
 static FARPROC Functions[sizeof(Name) / sizeof(LPSTR)];
 static bool Attached = false;
